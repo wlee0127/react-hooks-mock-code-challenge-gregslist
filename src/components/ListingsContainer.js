@@ -1,11 +1,20 @@
 import React from "react";
-// import ListingCard from "./ListingCard";
+import ListingCard from "./ListingCard";
 
-function ListingsContainer() {
+function ListingsContainer({listing}) {
+
+function deleteFunction(itemid) {
+  fetch(`http://localhost:6001/listings/${itemid}`,{
+    method: "DELETE"
+  })
+  .then((response)=>response.json())
+  .then((data)=>{console.log(data)})
+}
+
   return (
     <main>
       <ul className="cards">
-        {/* use the ListingCard component to display listings */}
+        {listing.map((item)=>(<ListingCard description={item.description} imagesrc={item.image} location={item.location} deleteHandler={()=>deleteFunction(item.id)}/>))}
       </ul>
     </main>
   );
